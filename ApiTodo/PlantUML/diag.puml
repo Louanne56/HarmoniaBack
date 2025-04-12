@@ -1,0 +1,19 @@
+@startuml Todo
+
+class Todo {
+    +int Id
+    +string? Task
+    +bool Completed
+    +DateTime? Deadline
+}
+
+class Agenda {
+    +int Id
+    +string? Nom
+}
+
+Todo --> Agenda : appartient à (0..1) 
+
+@enduml
+
+/' chaque Todo peut appartenir à un Agenda, mais pas à plusieurs
