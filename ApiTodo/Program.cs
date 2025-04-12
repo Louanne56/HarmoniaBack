@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 
+SeedData.seed(); // Appel de la méthode de seed pour initialiser la base de données
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuration CORS pour permettre l'accès depuis n'importe quelle origine
