@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiTodo.Migrations
 {
     [DbContext(typeof(HarmoniaContext))]
-    [Migration("20250324083915_NullableAttribut")]
-    partial class NullableAttribut
+    [Migration("20250413171450_modifContext")]
+    partial class modifContext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,13 +24,22 @@ namespace ApiTodo.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Audio")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Audio2")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Diagram1")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Diagram2")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Nom")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Position1")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Position2")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -76,7 +85,7 @@ namespace ApiTodo.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -99,7 +108,7 @@ namespace ApiTodo.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RolesClaims", (string)null);
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -122,7 +131,7 @@ namespace ApiTodo.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UtilisateursClaims", (string)null);
+                    b.ToTable("AspNetUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -144,7 +153,7 @@ namespace ApiTodo.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UtilisateursLogins", (string)null);
+                    b.ToTable("AspNetUserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -159,7 +168,7 @@ namespace ApiTodo.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UtilisateursRoles", (string)null);
+                    b.ToTable("AspNetUserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -178,7 +187,7 @@ namespace ApiTodo.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("UtilisateursTokens", (string)null);
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("ProgressionAccords", b =>
@@ -186,16 +195,17 @@ namespace ApiTodo.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Mode")
+                    b.Property<int>("Mode")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nom")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Style")
+                    b.Property<int>("Style")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Tonalite")
+                    b.Property<int>("Tonalite")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -270,7 +280,10 @@ namespace ApiTodo.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Pseudo")
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("SecurityStamp")

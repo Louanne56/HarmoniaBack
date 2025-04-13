@@ -10,6 +10,7 @@ public class HarmoniaContext : IdentityDbContext<Utilisateur>
     // Utilisateurs est déjà inclus via IdentityDbContext<Utilisateur>
     public DbSet<SuitesFavorites> SuitesFavorites { get; set; } = null!;
 
+
     public string DbPath { get; private set; }
 
     public HarmoniaContext()
@@ -29,17 +30,21 @@ public class HarmoniaContext : IdentityDbContext<Utilisateur>
     {
         base.OnModelCreating(builder); // Ne pas oublier cette ligne !
 
-        // Personnaliser les noms des tables Identity si nécessaire
+       // Désactive la création des tables inutiles générées automatiquement par ASP.NET Core Identity
+        builder.Ignore<IdentityUserClaim<string>>();
+        builder.Ignore<IdentityUserLogin<string>>();
+        builder.Ignore<IdentityUserToken<string>>();
+        builder.Ignore<IdentityRole>();
+        builder.Ignore<IdentityRoleClaim<string>>();
+        builder.Ignore<IdentityUserRole<string>>();
+
+        // Tes personnalisations
         builder.Entity<Utilisateur>().ToTable("Utilisateurs");
-        builder.Entity<IdentityRole>().ToTable("Roles");
-        builder.Entity<IdentityUserRole<string>>().ToTable("UtilisateursRoles");
-        builder.Entity<IdentityUserClaim<string>>().ToTable("UtilisateursClaims");
-        builder.Entity<IdentityUserLogin<string>>().ToTable("UtilisateursLogins");
-        builder.Entity<IdentityUserToken<string>>().ToTable("UtilisateursTokens");
-        builder.Entity<IdentityRoleClaim<string>>().ToTable("RolesClaims");
-        builder.Entity<ProgressionAccords>()
-        .HasMany(p => p.Accords)
-        .WithMany(a => a.Progressions)
-        .UsingEntity(j => j.ToTable("ProgressionAccord")); // Table de jonction
+
+        _ = builder
+            .Entity<ProgressionAccords>()
+            .HasMany(p => p.Accords)
+            .WithMany(a => a.Progressions)
+            .UsingEntity(j => j.ToTable("ProgressionAccord")); // Table de jonction
     }
 }

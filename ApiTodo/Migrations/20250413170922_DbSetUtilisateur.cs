@@ -5,7 +5,7 @@
 namespace ApiTodo.Migrations
 {
     /// <inheritdoc />
-    public partial class NullableAttribut : Migration
+    public partial class DbSetUtilisateur : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

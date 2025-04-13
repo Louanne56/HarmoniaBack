@@ -1,22 +1,24 @@
+// Représente une progression favorite d'un utilisateur
 public class SuitesFavorites
 {
-    public string Id { get; set; }
-    public required string UserId { get; set; }
+    public string Id { get; set; } // ID de la relation
+    public required string UserId { get; set; } // ID de l'utilisateur
 
+    // Navigation vers la progression
     public ProgressionAccords? ProgressionAccords { get; set; }
-    public required string ProgressionAccordsId { get; set; }
+    public required string ProgressionAccordsId { get; set; } // ID de la progression
 
+    // Constructeur par défaut
     public SuitesFavorites()
     {
-        Id = Guid.NewGuid().ToString(); // Générer un ID unique dans le constructeur par défaut
+        Id = Guid.NewGuid().ToString();
     }
 
+    // Constructeur avec paramètres
     public SuitesFavorites(string userId, string progressionAccordsId)
     {
-        Id = Guid.NewGuid().ToString(); // Générer un ID unique
-        this.UserId = userId;
-        this.ProgressionAccordsId = progressionAccordsId;
+        Id = Guid.NewGuid().ToString();
+        UserId = userId;
+        ProgressionAccordsId = progressionAccordsId;
     }
-
-    // Constructeur pour mapper un SuitesFavoritesDTO vers SuitesFavorites
 }

@@ -1,18 +1,22 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+// Contrôleur pour gérer les accords (CRUD complet)
 [ApiController]
 [Route("api/accords")]
 public class AccordsController : ControllerBase
 {
     private readonly HarmoniaContext _context;
 
+    // Initialise le contrôleur avec le contexte de base de données
     public AccordsController(HarmoniaContext context)
     {
         _context = context;
     }
 
     // GET: api/accords
+    // Récupère tous les accords
+    // Retourne : Liste d'AccordDTO (200 OK)
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AccordDTO>>> GetAccords()
     {
@@ -21,6 +25,8 @@ public class AccordsController : ControllerBase
     }
 
     // GET: api/accords/5
+    // Récupère un accord par son ID
+    // Retourne : AccordDTO (200 OK) ou 404 si non trouvé
     [HttpGet("{id}")]
     public async Task<ActionResult<AccordDTO>> GetAccord(string id)
     {
@@ -35,6 +41,10 @@ public class AccordsController : ControllerBase
     }
 
     // POST: api/accords
+    // Crée un nouvel accord
+    // Retourne : 
+    // - 201 Created + AccordDTO si succès
+    // - 400 si données invalides
     [HttpPost]
     public async Task<ActionResult<AccordDTO>> CreateAccord(
         [FromBody] AccordCreateDTO accordCreateDTO
@@ -45,7 +55,10 @@ public class AccordsController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        // Validation manuelle des données
+        /* Validation manuelle :
+         * - Nom obligatoire
+         * - Diagram1 obligatoire
+         */
         if (string.IsNullOrWhiteSpace(accordCreateDTO.Nom))
         {
             return BadRequest("Le nom de l'accord est requis.");
@@ -56,7 +69,7 @@ public class AccordsController : ControllerBase
             return BadRequest("La position 1 est requise.");
         }
 
-        // Mapper AccordCreateDTO vers Accord
+        // Mapping DTO -> Entité Accord
         var accord = new Accord
         {
             Nom = accordCreateDTO.Nom,
@@ -69,12 +82,17 @@ public class AccordsController : ControllerBase
         _context.Accords.Add(accord);
         await _context.SaveChangesAsync();
 
-        // Renvoyer la réponse avec le DTO complet
+        // Retourne l'URI de la nouvelle ressource
         var accordDTO = new AccordDTO(accord);
         return CreatedAtAction(nameof(GetAccord), new { id = accord.Id }, accordDTO);
     }
 
     // PUT: api/accords/5
+    // Met à jour un accord existant
+    // Retourne :
+    // - 204 NoContent si succès
+    // - 400 si ID non concordant ou données invalides
+    // - 404 si accord non trouvé
     [HttpPut("{id}")]
     public async Task<IActionResult> PutAccord(string id, [FromBody] AccordDTO accordDTO)
     {
@@ -83,7 +101,7 @@ public class AccordsController : ControllerBase
             return BadRequest("L'ID de l'accord ne correspond pas.");
         }
 
-        // Validation des données
+        // Validation des données (comme pour la création)
         if (string.IsNullOrWhiteSpace(accordDTO.Nom))
         {
             return BadRequest("Le nom de l'accord est requis.");
@@ -101,7 +119,7 @@ public class AccordsController : ControllerBase
             return NotFound("Accord non trouvé.");
         }
 
-        // Mapper les propriétés
+        // Mise à jour des propriétés
         accord.Nom = accordDTO.Nom;
         accord.Diagram1 = accordDTO.Diagram1;
         accord.Diagram2 = accordDTO.Diagram2;
@@ -130,6 +148,10 @@ public class AccordsController : ControllerBase
     }
 
     // DELETE: api/accords/5
+    // Supprime un accord spécifique
+    // Retourne :
+    // - 204 NoContent si succès
+    // - 404 si non trouvé
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAccord(string id)
     {
@@ -147,6 +169,10 @@ public class AccordsController : ControllerBase
     }
 
     // DELETE: api/accords/all
+    // Supprime TOUS les accords (opération dangereuse)
+    // Retourne :
+    // - 204 NoContent si succès
+    // - 404 si aucun accord existant
     [HttpDelete("all")]
     public async Task<IActionResult> DeleteAllAccords()
     {

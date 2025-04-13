@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiTodo.Migrations
 {
     [DbContext(typeof(HarmoniaContext))]
-    [Migration("20250329160645_Audio")]
-    partial class Audio
+    [Migration("20250413170922_DbSetUtilisateur")]
+    partial class DbSetUtilisateur
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,13 +28,18 @@ namespace ApiTodo.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Audio2")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Diagram1")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Diagram2")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Nom")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Position1")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Position2")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -190,16 +195,17 @@ namespace ApiTodo.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Mode")
+                    b.Property<int>("Mode")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nom")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Style")
+                    b.Property<int>("Style")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Tonalite")
+                    b.Property<int>("Tonalite")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -274,7 +280,10 @@ namespace ApiTodo.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Pseudo")
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("SecurityStamp")
