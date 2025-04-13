@@ -1,0 +1,6 @@
+@HarmoniaBack_HostAddress = http://localhost:5007
+
+GET {{HarmoniaBack_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
