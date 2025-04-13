@@ -1,10 +1,10 @@
 public class AccordDTO // pour les réponses de l'API
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty; // ID de l'accord
     public string? Nom { get; set; }
     public string? Diagram1 { get; set; }
     public string? Diagram2 { get; set; }
-    public string Audio { get; set; }
+    public string Audio { get; set; } = string.Empty; // pour la version 1 de l'accord
     public string? Audio2 { get; set; } // pour la version 2 de l'accord
 
     public AccordDTO() { }

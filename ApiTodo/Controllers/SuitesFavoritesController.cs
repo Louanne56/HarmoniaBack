@@ -24,7 +24,7 @@ public class SuitesFavoritesController : ControllerBase
         var suitesFavorites = await _context
             .SuitesFavorites.AsNoTracking()
             .Include(sf => sf.ProgressionAccords)
-            .ThenInclude(p => p.Accords)
+            .ThenInclude(p => p!.Accords)
             .Select(sf => new SuitesFavoritesDTO(sf))
             .ToListAsync();
 
@@ -41,7 +41,7 @@ public class SuitesFavoritesController : ControllerBase
             .SuitesFavorites.AsNoTracking()
             .Where(sf => sf.UserId == userId)
             .Include(sf => sf.ProgressionAccords)
-            .ThenInclude(p => p.Accords)
+            .ThenInclude(p => p!.Accords)
             .Select(sf => new SuitesFavoritesDTO(sf))
             .ToListAsync();
 
@@ -55,7 +55,7 @@ public class SuitesFavoritesController : ControllerBase
         var suiteFavorite = await _context
             .SuitesFavorites.AsNoTracking()
             .Include(sf => sf.ProgressionAccords)
-            .ThenInclude(p => p.Accords)
+            .ThenInclude(p => p!.Accords)
             .FirstOrDefaultAsync(sf => sf.Id == id);
 
         if (suiteFavorite == null)
@@ -91,8 +91,14 @@ public class SuitesFavoritesController : ControllerBase
         // Recharger avec une requête explicite
         var loadedSuiteFavorite = await _context
             .SuitesFavorites.Include(sf => sf.ProgressionAccords)
-            .ThenInclude(p => p.Accords)
+            .ThenInclude(p => p!.Accords)
             .FirstOrDefaultAsync(sf => sf.Id == suiteFavorite.Id);
+
+        // Vérifier si loadedSuiteFavorite n'est pas null avant de créer le DTO
+        if (loadedSuiteFavorite == null)
+        {
+            return NotFound("Created suite favorite could not be loaded");
+        }
 
         return CreatedAtAction(
             nameof(GetSuiteFavorite),

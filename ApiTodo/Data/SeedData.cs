@@ -1,7 +1,4 @@
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 public static class SeedData
 {
@@ -12,7 +9,9 @@ public static class SeedData
         // 1. Ajouter les accords
         if (context.Accords.Any())
         {
-            Console.WriteLine("La base de données contient déjà des accords. Initialisation ignorée.");
+            Console.WriteLine(
+                "La base de données contient déjà des accords. Initialisation ignorée."
+            );
             return; // La base de données a déjà été initialisée
         }
 
@@ -26,7 +25,7 @@ public static class SeedData
                 Diagram1 = "A.png",
                 Diagram2 = "A_v2.png",
                 Audio = "A.mp3",
-                Audio2 = "A_v2.mp3"
+                Audio2 = "A_v2.mp3",
             },
             new Accord
             {
@@ -35,7 +34,7 @@ public static class SeedData
                 Diagram1 = "Am.png",
                 Diagram2 = "Am_v2.png",
                 Audio = "Am.mp3",
-                Audio2 = "Am_v2.mp3"
+                Audio2 = "Am_v2.mp3",
             },
             new Accord
             {
@@ -44,7 +43,7 @@ public static class SeedData
                 Diagram1 = "Am7.png",
                 Diagram2 = "",
                 Audio = "Am7.mp3",
-                Audio2 = ""
+                Audio2 = "",
             },
             new Accord
             {
@@ -53,7 +52,7 @@ public static class SeedData
                 Diagram1 = "Bdim.png",
                 Diagram2 = "",
                 Audio = "Bdim.mp3",
-                Audio2 = ""
+                Audio2 = "",
             },
             new Accord
             {
@@ -62,7 +61,7 @@ public static class SeedData
                 Diagram1 = "Bm.png",
                 Diagram2 = "Bm_v2.png",
                 Audio = "Bm.mp3",
-                Audio2 = "Bm_v2.mp3"
+                Audio2 = "Bm_v2.mp3",
             },
             new Accord
             {
@@ -71,7 +70,7 @@ public static class SeedData
                 Diagram1 = "Bm7.png",
                 Diagram2 = "",
                 Audio = "Bm7.mp3",
-                Audio2 = ""
+                Audio2 = "",
             },
             new Accord
             {
@@ -80,7 +79,7 @@ public static class SeedData
                 Diagram1 = "C.png",
                 Diagram2 = "C_v2.png",
                 Audio = "C.mp3",
-                Audio2 = "C_v2.mp3"
+                Audio2 = "C_v2.mp3",
             },
             new Accord
             {
@@ -89,7 +88,7 @@ public static class SeedData
                 Diagram1 = "C7.png",
                 Diagram2 = "",
                 Audio = "C7.mp3",
-                Audio2 = ""
+                Audio2 = "",
             },
             new Accord
             {
@@ -98,7 +97,7 @@ public static class SeedData
                 Diagram1 = "Cm.png",
                 Diagram2 = "",
                 Audio = "Cm.mp3",
-                Audio2 = ""
+                Audio2 = "",
             },
             new Accord
             {
@@ -107,7 +106,7 @@ public static class SeedData
                 Diagram1 = "D7.png",
                 Diagram2 = "",
                 Audio = "D7.mp3",
-                Audio2 = ""
+                Audio2 = "",
             },
             new Accord
             {
@@ -116,7 +115,7 @@ public static class SeedData
                 Diagram1 = "Dm7.png",
                 Diagram2 = "",
                 Audio = "Dm7.mp3",
-                Audio2 = ""
+                Audio2 = "",
             },
             new Accord
             {
@@ -125,7 +124,7 @@ public static class SeedData
                 Diagram1 = "E.png",
                 Diagram2 = "E_v2.png",
                 Audio = "E.mp3",
-                Audio2 = "E_v2.mp3"
+                Audio2 = "E_v2.mp3",
             },
             new Accord
             {
@@ -134,7 +133,7 @@ public static class SeedData
                 Diagram1 = "Em.png",
                 Diagram2 = "Em_v2.png",
                 Audio = "Em.mp3",
-                Audio2 = "Em_v2.mp3"
+                Audio2 = "Em_v2.mp3",
             },
             new Accord
             {
@@ -143,7 +142,7 @@ public static class SeedData
                 Diagram1 = "Em7.png",
                 Diagram2 = "",
                 Audio = "Em7.mp3",
-                Audio2 = ""
+                Audio2 = "",
             },
             new Accord
             {
@@ -152,7 +151,7 @@ public static class SeedData
                 Diagram1 = "F.png",
                 Diagram2 = "F_v2.png",
                 Audio = "F.mp3",
-                Audio2 = "F_v2.mp3"
+                Audio2 = "F_v2.mp3",
             },
             new Accord
             {
@@ -161,7 +160,7 @@ public static class SeedData
                 Diagram1 = "Fsharpdim.png",
                 Diagram2 = "",
                 Audio = "Fsharpdim.mp3",
-                Audio2 = ""
+                Audio2 = "",
             },
             new Accord
             {
@@ -170,7 +169,7 @@ public static class SeedData
                 Diagram1 = "Fm.png",
                 Diagram2 = "",
                 Audio = "Fm.mp3",
-                Audio2 = ""
+                Audio2 = "",
             },
             new Accord
             {
@@ -179,7 +178,7 @@ public static class SeedData
                 Diagram1 = "G.png",
                 Diagram2 = "G_v2.png",
                 Audio = "G.mp3",
-                Audio2 = "G_v2.mp3"
+                Audio2 = "G_v2.mp3",
             },
             new Accord
             {
@@ -188,7 +187,7 @@ public static class SeedData
                 Diagram1 = "G7.png",
                 Diagram2 = "",
                 Audio = "G7.mp3",
-                Audio2 = ""
+                Audio2 = "",
             },
             new Accord
             {
@@ -197,8 +196,8 @@ public static class SeedData
                 Diagram1 = "Gm.png",
                 Diagram2 = "",
                 Audio = "Gm.mp3",
-                Audio2 = ""
-            }
+                Audio2 = "",
+            },
         };
 
         context.Accords.AddRange(accords);
@@ -220,11 +219,54 @@ public static class SeedData
                 Style = Style.Pop,
                 Accords = new List<Accord>
                 {
-                    accordsDict["A"],
-                    accordsDict["C"],
+                    accordsDict["Em"],
                     accordsDict["Bm"],
-                    accordsDict["Em"]
-                }
+                    accordsDict["C"],
+                    accordsDict["Am"],
+                },
+            },
+            new ProgressionAccords
+            {
+                Id = "b7886b8c-6f3c-4bb6-894f-99fbf8e38762",
+                Nom = "Pop en mi mineur",
+                Tonalite = Tonalite.E,
+                Mode = Mode.Mineur,
+                Style = Style.Pop,
+                Accords = new List<Accord>
+                {
+                    accordsDict["C"],
+                    accordsDict["Am"],
+                    accordsDict["Em"],
+                    accordsDict["Bm"],
+                },
+            },
+            new ProgressionAccords
+            {
+                Id = "1dce1028-b8ec-43e3-8b9d-d926021234da",
+                Nom = "Rock en mi mineur",
+                Tonalite = Tonalite.E,
+                Mode = Mode.Majeur,
+                Style = Style.Rock,
+                Accords = new List<Accord>
+                {
+                    accordsDict["Em"],
+                    accordsDict["Am"],
+                    accordsDict["Bm"],
+                },
+            },
+            new ProgressionAccords
+            {
+                Id = "925fe80f-2ded-4701-bec8-0788203d3925",
+                Nom = "Jazz en mi mineur",
+                Tonalite = Tonalite.E,
+                Mode = Mode.Mineur,
+                Style = Style.Jazz,
+                Accords = new List<Accord>
+                {
+                    accordsDict["Fsharpdim"],
+                    accordsDict["Bm"],
+                    accordsDict["Em"],
+                },
             },
             new ProgressionAccords
             {
@@ -233,13 +275,149 @@ public static class SeedData
                 Tonalite = Tonalite.C,
                 Mode = Mode.Majeur,
                 Style = Style.Rock,
+                Accords = new List<Accord> { accordsDict["C"], accordsDict["F"], accordsDict["G"] },
+            },
+            new ProgressionAccords
+            {
+                Id = "e058ff02-faa0-4899-9a0d-95a296618abf",
+                Nom = "Pop en do majeur",
+                Tonalite = Tonalite.C,
+                Mode = Mode.Majeur,
+                Style = Style.Blues,
                 Accords = new List<Accord>
                 {
                     accordsDict["C"],
                     accordsDict["G"],
-                    accordsDict["F"]
-                }
-            }
+                    accordsDict["Am"],
+                    accordsDict["G"],
+                },
+            },
+            new ProgressionAccords
+            {
+                Id = "f3a2b5d4-0c7e-4b8c-8f1d-9a6e2f3b5c1e",
+                Nom = "Jazz en do majeur",
+                Tonalite = Tonalite.C,
+                Mode = Mode.Majeur,
+                Style = Style.Jazz,
+                Accords = new List<Accord>
+                {
+                    accordsDict["Dm7"],
+                    accordsDict["G7"],
+                    accordsDict["C7"],
+                },
+            },
+            new ProgressionAccords
+            {
+                Id = "c3a2b5d4-0c7e-4b8c-8f1d-9a6e2f3b5c1e",
+                Nom = "Pop en do majeur",
+                Tonalite = Tonalite.C,
+                Mode = Mode.Majeur,
+                Style = Style.Jazz,
+                Accords = new List<Accord>
+                {
+                    accordsDict["Am"],
+                    accordsDict["F"],
+                    accordsDict["C"],
+                    accordsDict["G"],
+                },
+            },
+            new ProgressionAccords
+            {
+                Id = Guid.NewGuid().ToString(),
+                Nom = "Pop en la mineur",
+                Tonalite = Tonalite.A,
+                Mode = Mode.Mineur,
+                Style = Style.Pop,
+                Accords = new List<Accord>
+                {
+                    accordsDict["Am"],
+                    accordsDict["Em"],
+                    accordsDict["F"],
+                    accordsDict["Dm"],
+                },
+            },
+            new ProgressionAccords
+            {
+                Id = Guid.NewGuid().ToString(),
+                Nom = "Pop en la mineur",
+                Tonalite = Tonalite.A,
+                Mode = Mode.Mineur,
+                Style = Style.Pop,
+                Accords = new List<Accord>
+                {
+                    accordsDict["F"],
+                    accordsDict["Dm"],
+                    accordsDict["Am"],
+                    accordsDict["Em"],
+                },
+            },
+            new ProgressionAccords
+            {
+                Id = Guid.NewGuid().ToString(),
+                Nom = "Rock en la mineur",
+                Tonalite = Tonalite.A,
+                Mode = Mode.Mineur,
+                Style = Style.Rock,
+                Accords = new List<Accord>
+                {
+                    accordsDict["Am"],
+                    accordsDict["Dm"],
+                    accordsDict["Em"],
+                },
+            },
+            new ProgressionAccords
+            {
+                Id = Guid.NewGuid().ToString(),
+                Nom = "Jazz en la mineur",
+                Tonalite = Tonalite.A,
+                Mode = Mode.Mineur,
+                Style = Style.Jazz,
+                Accords = new List<Accord>
+                {
+                    accordsDict["Bdim"],
+                    accordsDict["Em"],
+                    accordsDict["Am"],
+                },
+            },
+            new ProgressionAccords
+            {
+                Id = Guid.NewGuid().ToString(),
+                Nom = "Pop en sol majeur",
+                Tonalite = Tonalite.G,
+                Mode = Mode.Majeur,
+                Style = Style.Pop,
+                Accords = new List<Accord>
+                {
+                    accordsDict["G"],
+                    accordsDict["D"],
+                    accordsDict["Em"],
+                    accordsDict["C"],
+                },
+            },
+            new ProgressionAccords
+            {
+                Id = Guid.NewGuid().ToString(),
+                Nom = "Pop en sol majeur",
+                Tonalite = Tonalite.G,
+                Mode = Mode.Majeur,
+                Style = Style.Pop,
+                Accords = new List<Accord>
+                {
+                    accordsDict["Em"],
+                    accordsDict["C"],
+                    accordsDict["G"],
+                    accordsDict["D"],
+                },
+            },
+            new ProgressionAccords
+            {
+                Id = Guid.NewGuid().ToString(),
+                Nom = "Rock en sol majeur",
+                Tonalite = Tonalite.G,
+                Mode = Mode.Majeur,
+                Style = Style.Rock,
+                Accords = new List<Accord> { accordsDict["G"], accordsDict["C"], accordsDict["D"] },
+            },
         };
 
         context.ProgressionAccords.AddRange(progressions);
@@ -253,47 +431,33 @@ public static class SeedData
             new Utilisateur
             {
                 Id = "031046ec-54b6-4c00-a714-c3051037a0cd",
-                Pseudo = "Louanne",
-                Email = "monnierlouanne56@gmail.com",
                 UserName = "Louanne",
+                Email = "monnierlouanne56@gmail.com",
                 NormalizedUserName = "LOUANNE",
                 NormalizedEmail = "MONNIERLOUANNE56@GMAIL.COM",
                 EmailConfirmed = true,
-                SecurityStamp = Guid.NewGuid().ToString()
+                SecurityStamp = Guid.NewGuid().ToString(),
             },
             new Utilisateur
             {
-                Id = "1598aabf-875a-4239-87e7-f9bc1e79daf9",
-                Pseudo = "loulou",
-                Email = "lmonnier005@ensc.fr",
-                UserName = "loulou",
-                NormalizedUserName = "LOULOU",
-                NormalizedEmail = "LMONNIER005@ENSC.FR",
+                Id = "f0d3d6c3-9a3f-4ab-8c3d-0f1a2e4f5b6d",
+                UserName = "Victor",
+                Email = "victor@gmail.com",
+                NormalizedUserName = "JULIEN",
+                NormalizedEmail = "JULIEN@GMAIL.COM",
                 EmailConfirmed = true,
-                SecurityStamp = Guid.NewGuid().ToString()
-            },
-            new Utilisateur
-            {
-                Id = "9106e68e-4978-437e-98c5-98b18ab8ca9b",
-                Pseudo = "patrice",
-                Email = "monnierpatrice@orange.fr",
-                UserName = "patrice",
-                NormalizedUserName = "PATRICE",
-                NormalizedEmail = "MONNIERPATRICE@ORANGE.FR",
-                EmailConfirmed = true,
-                SecurityStamp = Guid.NewGuid().ToString()
+                SecurityStamp = Guid.NewGuid().ToString(),
             },
             new Utilisateur
             {
                 Id = "5cb8b974-9062-4ea4-8fe0-4febf3da5c6d",
-                Pseudo = "pipou",
-                Email = "pipou@mail.com",
                 UserName = "pipou",
+                Email = "pipou@mail.com",
                 NormalizedUserName = "PIPOU",
                 NormalizedEmail = "PIPOU@MAIL.COM",
                 EmailConfirmed = true,
-                SecurityStamp = Guid.NewGuid().ToString()
-            }
+                SecurityStamp = Guid.NewGuid().ToString(),
+            },
         };
 
         // Définir un mot de passe par défaut pour tous les utilisateurs
@@ -314,20 +478,20 @@ public static class SeedData
             {
                 Id = "291a42f0-75e6-4c77-9ba1-2ba894f4b197",
                 UserId = "031046ec-54b6-4c00-a714-c3051037a0cd",
-                ProgressionAccordsId = "b7886b8c-6f3c-4bb6-894f-99fbf8e38761"
+                ProgressionAccordsId = "b7886b8c-6f3c-4bb6-894f-99fbf8e38761",
             },
             new SuitesFavorites
             {
                 Id = "86d1a39f-db34-41a1-b770-991ad9a2f406",
                 UserId = "031046ec-54b6-4c00-a714-c3051037a0cd",
-                ProgressionAccordsId = "77838781-fa74-473f-99ad-2bda4512dfdc"
-            }
+                ProgressionAccordsId = "77838781-fa74-473f-99ad-2bda4512dfdc",
+            },
         };
 
         context.SuitesFavorites.AddRange(suitesFavorites);
         context.SaveChanges();
         Console.WriteLine("Suites favorites ajoutées avec succès");
-        
+
         Console.WriteLine("Initialisation de la base de données terminée avec succès");
     }
 }

@@ -10,9 +10,9 @@ public class ProgressionAccordDTO
     public string Nom { get; set; }
 
     // Valeurs enum originales
-    public Tonalite? Tonalite { get; set; }
-    public Mode? Mode { get; set; }
-    public Style? Style { get; set; }
+    public Tonalite Tonalite { get; set; }
+    public Mode Mode { get; set; }
+    public Style Style { get; set; }
 
     // Représentations textuelles
     public string TonaliteNom { get; set; }
@@ -32,24 +32,22 @@ public class ProgressionAccordDTO
         Style = progression.Style;
 
         // Représentations textuelles
-        TonaliteNom = progression.Tonalite.HasValue
-            ? GetDisplayName(progression.Tonalite.Value)
-            : null;
-
-        ModeNom = progression.Mode?.ToString();
-        StyleNom = progression.Style?.ToString();
+        TonaliteNom = GetDisplayName(progression.Tonalite); // Aucune vérification de null nécessaire
+        ModeNom = progression.Mode.ToString(); // Mode est non-nullable, pas besoin de ?.
+        StyleNom = progression.Style.ToString(); // Style est non-nullable, pas besoin de ?.
 
         Accords = progression.Accords?.Select(a => a.Nom).ToList() ?? new List<string>();
     }
 
     private string GetDisplayName(Enum enumValue)
     {
+        var fieldInfo = enumValue.GetType()?.GetField(enumValue.ToString());
+        if (fieldInfo == null)
+            return enumValue.ToString();
+
         var displayAttribute =
-            enumValue
-                .GetType()
-                .GetField(enumValue.ToString())
-                .GetCustomAttributes(typeof(DisplayAttribute), false)
-                .FirstOrDefault() as DisplayAttribute;
+            fieldInfo.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault()
+            as DisplayAttribute;
 
         return displayAttribute?.Name ?? enumValue.ToString();
     }

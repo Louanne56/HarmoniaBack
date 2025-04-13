@@ -1,11 +1,11 @@
 public class UtilisateurCreateDTO
 {
-    public string? Pseudo { get; set; }
+    public string? UserName { get; set; }
 
     public UtilisateurCreateDTO() { }
 
     public UtilisateurCreateDTO(Utilisateur utilisateur)
     {
-        Pseudo = utilisateur.Pseudo;
+        UserName = utilisateur.UserName;
     }
 }

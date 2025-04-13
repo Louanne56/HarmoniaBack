@@ -74,7 +74,7 @@ namespace Harmonia.Controllers
                         Utilisateur = new
                         {
                             Id = utilisateur.Id,
-                            Pseudo = utilisateur.Pseudo,
+                            Pseudo = utilisateur.UserName,
                             Email = utilisateur.Email,
                         },
                     }
@@ -132,7 +132,7 @@ namespace Harmonia.Controllers
                         Utilisateur = new
                         {
                             Id = utilisateur.Id,
-                            Pseudo = utilisateur.Pseudo,
+                            Pseudo = utilisateur.UserName,
                             Email = utilisateur.Email,
                         },
                     }
@@ -157,7 +157,16 @@ namespace Harmonia.Controllers
                 return BadRequest(new { Message = "Token invalide ou expiré" });
             }
 
-            var userId = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            // Récupérer l'ID utilisateur et vérifier qu'il existe
+            var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || string.IsNullOrEmpty(userIdClaim.Value))
+            {
+                return BadRequest(
+                    new { Message = "Token malformé: identifiant utilisateur manquant" }
+                );
+            }
+
+            var userId = userIdClaim.Value;
             var user = await _userManager.FindByIdAsync(userId);
 
             // Vérifier si le refresh token est valide
@@ -165,6 +174,7 @@ namespace Harmonia.Controllers
             {
                 return BadRequest(new { Message = "Token de rafraîchissement invalide" });
             }
+
 
             // Vérifier si le refresh token est proche de l'expiration (par exemple, dans les 24 heures)
             if (user.RefreshTokenExpiryTime <= DateTime.Now.AddHours(24))
@@ -188,7 +198,7 @@ namespace Harmonia.Controllers
                     Utilisateur = new
                     {
                         Id = user.Id,
-                        Pseudo = user.Pseudo,
+                        Pseudo = user.UserName,
                         Email = user.Email,
                     },
                 }
@@ -200,8 +210,8 @@ namespace Harmonia.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.UserName ?? string.Empty),
+                new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
             };
 
             // Ajouter les rôles aux claims si nécessaire

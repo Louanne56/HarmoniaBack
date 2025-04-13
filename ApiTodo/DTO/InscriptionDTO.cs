@@ -1,6 +1,6 @@
 public class InscriptionDTO
 {
-    public string Pseudo { get; set; }
-    public string Email { get; set; }
-    public string MotDePasse { get; set; }
+    public required string Pseudo { get; set; }
+    public required string Email { get; set; }
+    public required string MotDePasse { get; set; }
 }

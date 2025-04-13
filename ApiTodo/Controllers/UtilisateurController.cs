@@ -25,7 +25,7 @@ public class UtilisateursController : ControllerBase
             .Users.Select(u => new UtilisateurDTO
             {
                 Id = u.Id,
-                Pseudo = u.Pseudo,
+                UserName = u.UserName,
                 Email = u.Email,
             })
             .ToListAsync();
@@ -63,7 +63,7 @@ public class UtilisateursController : ControllerBase
         return new UtilisateurDTO
         {
             Id = utilisateur.Id,
-            Pseudo = utilisateur.Pseudo,
+            UserName = utilisateur.UserName,
             Email = utilisateur.Email,
         };
     }
@@ -191,9 +191,9 @@ public class UtilisateursController : ControllerBase
             return NotFound("Utilisateur non trouvé.");
         }
 
-        utilisateur.Pseudo = utilisateurDTO.Pseudo;
+        utilisateur.UserName = utilisateurDTO.UserName;
         utilisateur.Email = utilisateurDTO.Email;
-        utilisateur.UserName = utilisateurDTO.Pseudo; // Mettre à jour le UserName pour Identity
+        utilisateur.UserName = utilisateurDTO.UserName; // Mettre à jour le UserName pour Identity
 
         var result = await _userManager.UpdateAsync(utilisateur);
         if (!result.Succeeded)
@@ -204,44 +204,51 @@ public class UtilisateursController : ControllerBase
         return NoContent();
     }
 
-  // DELETE: api/utilisateurs/mon-compte
-[HttpDelete("mon-compte")] //pour que l'utilisateur puisse supp son propre
-[Authorize] // Seuls les utilisateurs authentifiés peuvent accéder à cette route
-public async Task<IActionResult> DeleteMonCompte()
-{
-    var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-    var utilisateur = await _userManager.FindByIdAsync(currentUserId);
-    if (utilisateur == null)
+    // DELETE: api/utilisateurs/mon-compte
+    [HttpDelete("mon-compte")] //pour que l'utilisateur puisse supp son propre
+    [Authorize] // Seuls les utilisateurs authentifiés peuvent accéder à cette route
+    public async Task<IActionResult> DeleteMonCompte()
     {
-        return NotFound("Utilisateur non trouvé.");
+        // Récupérer l'ID de l'utilisateur et vérifier qu'il existe
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null || string.IsNullOrEmpty(userIdClaim.Value))
+        {
+            return BadRequest("ID utilisateur introuvable dans le token.");
+        }
+
+        var currentUserId = userIdClaim.Value;
+
+        var utilisateur = await _userManager.FindByIdAsync(currentUserId);
+        if (utilisateur == null)
+        {
+            return NotFound("Utilisateur non trouvé.");
+        }
+
+        var result = await _userManager.DeleteAsync(utilisateur);
+        if (!result.Succeeded)
+        {
+            return BadRequest(result.Errors);
+        }
+
+        return NoContent();
     }
 
-    var result = await _userManager.DeleteAsync(utilisateur);
-    if (!result.Succeeded)
+    [HttpDelete("{id}")]
+    // Enlevez temporairement [Authorize] pour tester
+    public async Task<IActionResult> DeleteUtilisateur(string id)
     {
-        return BadRequest(result.Errors);
+        var utilisateur = await _userManager.FindByIdAsync(id);
+        if (utilisateur == null)
+        {
+            return NotFound("Utilisateur non trouvé.");
+        }
+
+        var result = await _userManager.DeleteAsync(utilisateur);
+        if (!result.Succeeded)
+        {
+            return BadRequest(result.Errors);
+        }
+
+        return NoContent();
     }
-
-    return NoContent();
-}
-
-[HttpDelete("{id}")]
-// Enlevez temporairement [Authorize] pour tester
-public async Task<IActionResult> DeleteUtilisateur(string id)
-{
-    var utilisateur = await _userManager.FindByIdAsync(id);
-    if (utilisateur == null)
-    {
-        return NotFound("Utilisateur non trouvé.");
-    }
-
-    var result = await _userManager.DeleteAsync(utilisateur);
-    if (!result.Succeeded)
-    {
-        return BadRequest(result.Errors);
-    }
-
-    return NoContent();
-}
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiTodo.Migrations
 {
     [DbContext(typeof(HarmoniaContext))]
-    [Migration("20250322160517_GuidIdUnique")]
-    partial class GuidIdUnique
+    [Migration("20250413093550_ajout required")]
+    partial class ajoutrequired
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,23 +24,42 @@ namespace ApiTodo.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Audio")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Audio2")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Diagram1")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Diagram2")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Nom")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Position1")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Position2")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ProgressionAccordsId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProgressionAccordsId");
-
                     b.ToTable("Accords");
+                });
+
+            modelBuilder.Entity("AccordProgressionAccords", b =>
+                {
+                    b.Property<string>("AccordsId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProgressionsId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("AccordsId", "ProgressionsId");
+
+                    b.HasIndex("ProgressionsId");
+
+                    b.ToTable("ProgressionAccord", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -176,16 +195,17 @@ namespace ApiTodo.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Mode")
+                    b.Property<int>("Mode")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nom")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Style")
+                    b.Property<int>("Style")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Tonalite")
+                    b.Property<int>("Tonalite")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -260,7 +280,10 @@ namespace ApiTodo.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Pseudo")
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("SecurityStamp")
@@ -285,11 +308,19 @@ namespace ApiTodo.Migrations
                     b.ToTable("Utilisateurs", (string)null);
                 });
 
-            modelBuilder.Entity("Accord", b =>
+            modelBuilder.Entity("AccordProgressionAccords", b =>
                 {
+                    b.HasOne("Accord", null)
+                        .WithMany()
+                        .HasForeignKey("AccordsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ProgressionAccords", null)
-                        .WithMany("Accords")
-                        .HasForeignKey("ProgressionAccordsId");
+                        .WithMany()
+                        .HasForeignKey("ProgressionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -356,11 +387,6 @@ namespace ApiTodo.Migrations
                         .HasForeignKey("UtilisateurId");
 
                     b.Navigation("ProgressionAccords");
-                });
-
-            modelBuilder.Entity("ProgressionAccords", b =>
-                {
-                    b.Navigation("Accords");
                 });
 
             modelBuilder.Entity("Utilisateur", b =>

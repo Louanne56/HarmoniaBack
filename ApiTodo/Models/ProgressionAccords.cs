@@ -42,25 +42,34 @@ public enum Style
 
 public class ProgressionAccords
 {
-    public string Id { get; set; }
-    public string? Nom { get; set; }
-    public Mode? Mode { get; set; }
-    public Style? Style { get; set; }
-    public Tonalite? Tonalite { get; set; }
+    public string Id { get; set; } = Guid.NewGuid().ToString();
+    public required string Nom { get; set; }
+    public required Mode Mode { get; set; }
+    public required Style Style { get; set; }
+    public required Tonalite Tonalite { get; set; }
     public List<Accord> Accords { get; set; } = new List<Accord>();
 
+    // Constructeur par défaut privé (à utiliser seulement par EF Core)
+    public ProgressionAccords() { }
 
-    public ProgressionAccords()
+    public ProgressionAccords(string nom, Mode mode, Style style, Tonalite tonalite)
     {
-        Id = Guid.NewGuid().ToString(); // Générer un ID unique dans le constructeur par défaut
+        Id = Guid.NewGuid().ToString();
+        Nom = nom ?? throw new ArgumentException("Nom is required");
+        Mode = mode;
+        Style = style;
+        Tonalite = tonalite;
     }
 
     public ProgressionAccords(ProgressionAccordDTO progressionAccordDTO)
     {
+        // Si l'ID du DTO est fourni, utilisez-le, sinon générez-en un nouveau
         this.Id = !string.IsNullOrEmpty(progressionAccordDTO.Id)
             ? progressionAccordDTO.Id
             : Guid.NewGuid().ToString();
-        this.Nom = progressionAccordDTO.Nom;
+
+        // Affectation des valeurs
+        this.Nom = progressionAccordDTO.Nom ?? throw new ArgumentException("Nom is required");
         this.Mode = progressionAccordDTO.Mode;
         this.Style = progressionAccordDTO.Style;
         this.Tonalite = progressionAccordDTO.Tonalite;

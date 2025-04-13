@@ -1,5 +1,5 @@
 public class ConnexionDTO
 {
-    public string Pseudo { get; set; } // Ou Email, selon ce que vous utilisez pour l'identification
-    public string MotDePasse { get; set; }
+    public string Pseudo { get; set; } = string.Empty;
+    public string MotDePasse { get; set; } = string.Empty;
 }

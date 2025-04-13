@@ -5,7 +5,13 @@ public class SuitesFavoritesDTO
     public string ProgressionAccordsId { get; set; }
     public ProgressionAccordDTO? ProgressionAccords { get; set; }
 
-    public SuitesFavoritesDTO() { }
+    public SuitesFavoritesDTO()
+    {
+        // Explicitement initialiser ces propriétés
+        Id = string.Empty;
+        UserId = string.Empty;
+        ProgressionAccordsId = string.Empty;
+    }
 
     public SuitesFavoritesDTO(SuitesFavorites suitesFavorites)
     {

@@ -29,12 +29,14 @@ namespace ApiTodo.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Diagram1")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Diagram2")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nom")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -190,16 +192,17 @@ namespace ApiTodo.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Mode")
+                    b.Property<int>("Mode")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Nom")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Style")
+                    b.Property<int>("Style")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("Tonalite")
+                    b.Property<int>("Tonalite")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -273,9 +276,6 @@ namespace ApiTodo.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Pseudo")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("RefreshToken")
                         .HasColumnType("TEXT");

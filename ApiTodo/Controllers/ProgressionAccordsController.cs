@@ -155,7 +155,7 @@ public class ProgressionAccordsController : ControllerBase
         var progression = new ProgressionAccords
         {
             Id = Guid.NewGuid().ToString(),
-            Nom = progressionCreateDTO.Nom,
+            Nom = progressionCreateDTO.Nom ?? string.Empty,
             Tonalite = progressionCreateDTO.Tonalite,
             Mode = progressionCreateDTO.Mode,
             Style = progressionCreateDTO.Style,
@@ -166,10 +166,11 @@ public class ProgressionAccordsController : ControllerBase
         // Attacher uniquement les références aux accords existants
         foreach (var accordId in progressionCreateDTO.Accords)
         {
-            // Au lieu de charger l'entité complète, créez juste une référence
-            var accord = new Accord { Id = accordId };
-            _context.Accords.Attach(accord); // Attache sans charger l'entité complète
-            progression.Accords.Add(accord);
+            var accord = await _context.Accords.FindAsync(accordId);
+            if (accord != null)
+            {
+                progression.Accords.Add(accord);
+            }
         }
 
         _context.ProgressionAccords.Add(progression);
@@ -182,6 +183,12 @@ public class ProgressionAccordsController : ControllerBase
         var loadedProgression = await _context
             .ProgressionAccords.Include(p => p.Accords)
             .FirstOrDefaultAsync(p => p.Id == progression.Id);
+
+        // Vérifier si loadedProgression n'est pas null avant de créer le DTO
+        if (loadedProgression == null)
+        {
+            return NotFound("Created progression could not be loaded");
+        }
 
         return CreatedAtAction(
             nameof(GetProgression),
@@ -212,7 +219,7 @@ public class ProgressionAccordsController : ControllerBase
         }
 
         // Mettre à jour les propriétés
-        progression.Nom = progressionDTO.Nom;
+        progression.Nom = progressionDTO.Nom ?? string.Empty;
         progression.Mode = progressionDTO.Mode;
         progression.Style = progressionDTO.Style;
         progression.Tonalite = progressionDTO.Tonalite;

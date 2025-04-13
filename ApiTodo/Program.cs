@@ -15,22 +15,24 @@ builder.Services.AddCors(options =>
         "AllowAll",
         policy =>
         {
-            policy.AllowAnyOrigin() // Permet à toute origine d'accéder à l'API (à restreindre en production)
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
+            policy
+                .AllowAnyOrigin() // Permet à toute origine d'accéder à l'API (à restreindre en production)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
         }
     );
 });
 
 // Configuration JWT
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder
+    .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"])
+                Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"] ?? "")
             ),
             ValidateIssuer = false,
             ValidateAudience = false,
@@ -38,7 +40,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddIdentity<Utilisateur, IdentityRole>(options =>
+builder
+    .Services.AddIdentity<Utilisateur, IdentityRole>(options =>
     {
         options.User.RequireUniqueEmail = true;
         options.SignIn.RequireConfirmedEmail = false;
@@ -57,8 +60,6 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-Console.WriteLine("🚀 Application démarrée !");
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -72,8 +73,3 @@ app.UseAuthorization();
 app.UseStaticFiles();
 app.MapControllers();
 app.Run();
-
-/* ⚠️ Si tu es sous Windows, pense à autoriser le port 5007 dans le pare-feu :
-   - Ouvre PowerShell en administrateur et exécute :
-     New-NetFirewallRule -DisplayName "Autoriser API .NET 5007" -Direction Inbound -Protocol TCP -LocalPort 5007 -Action Allow
-*/
