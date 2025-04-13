@@ -42,61 +42,63 @@ namespace Harmonia.Controllers
         [HttpPost("inscription")]
         public async Task<ActionResult<object>> Inscription([FromBody] InscriptionDTO model)
         {
-            if (!ModelState.IsValid)
+            // Validation minimale - 4 caractères pour pseudo et mot de passe
+            if (string.IsNullOrWhiteSpace(model.Pseudo) || model.Pseudo.Length < 4)
             {
-                return BadRequest(ModelState);
-            }
-
-            // Vérifier si l'utilisateur existe déjà
-            var existingUser = await _userManager.FindByNameAsync(model.Pseudo);
-            if (existingUser != null)
-            {
-                return Conflict(new { Message = "Ce pseudo est déjà utilisé." });
-            }
-
-            existingUser = await _userManager.FindByEmailAsync(model.Email);
-            if (existingUser != null)
-            {
-                return Conflict(new { Message = "Cette adresse email est déjà utilisée." });
-            }
-
-            // Créer le nouvel utilisateur
-            var utilisateur = new Utilisateur(model);
-            var result = await _userManager.CreateAsync(utilisateur, model.MotDePasse);
-
-            if (result.Succeeded)
-            {
-                // Générer le token JWT
-                var token = await GenerateJwtToken(utilisateur);
-
-                // Générer un refresh token valide 7 jours
-                var refreshToken = GenerateRefreshToken();
-                utilisateur.RefreshToken = refreshToken;
-                utilisateur.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
-                await _userManager.UpdateAsync(utilisateur);
-
-                return Ok(
-                    new
-                    {
-                        Token = token,
-                        RefreshToken = refreshToken,
-                        Utilisateur = new
-                        {
-                            Id = utilisateur.Id,
-                            Pseudo = utilisateur.UserName,
-                            Email = utilisateur.Email,
-                        },
-                    }
+                return BadRequest(
+                    new { Message = "Le pseudo doit contenir au moins 4 caractères" }
                 );
             }
 
-            // Gestion des erreurs de création
-            foreach (var error in result.Errors)
+            if (string.IsNullOrWhiteSpace(model.MotDePasse) || model.MotDePasse.Length < 4)
             {
-                ModelState.AddModelError(string.Empty, error.Description);
+                return BadRequest(
+                    new { Message = "Le mot de passe doit contenir au moins 4 caractères" }
+                );
             }
 
-            return BadRequest(ModelState);
+            // Vérification doublon pseudo/email
+            if (await _userManager.FindByNameAsync(model.Pseudo) != null)
+            {
+                return Conflict(new { Message = "Ce pseudo est déjà pris" });
+            }
+
+            if (await _userManager.FindByEmailAsync(model.Email) != null)
+            {
+                return Conflict(new { Message = "Cet email est déjà utilisé" });
+            }
+
+            // Création de l'utilisateur
+            var utilisateur = new Utilisateur { UserName = model.Pseudo, Email = model.Email };
+
+            var result = await _userManager.CreateAsync(utilisateur, model.MotDePasse);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest(new { Message = "Erreur lors de la création du compte" });
+            }
+
+            // Génération des tokens
+            var token = await GenerateJwtToken(utilisateur);
+            var refreshToken = GenerateRefreshToken();
+
+            utilisateur.RefreshToken = refreshToken;
+            utilisateur.RefreshTokenExpiryTime = DateTime.Now.AddDays(7);
+            await _userManager.UpdateAsync(utilisateur);
+
+            return Ok(
+                new
+                {
+                    Token = token,
+                    RefreshToken = refreshToken,
+                    Utilisateur = new
+                    {
+                        Id = utilisateur.Id,
+                        Pseudo = utilisateur.UserName,
+                        Email = utilisateur.Email,
+                    },
+                }
+            );
         }
 
         // Endpoint POST /api/auth/connexion

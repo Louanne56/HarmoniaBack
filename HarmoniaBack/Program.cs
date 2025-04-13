@@ -29,22 +29,6 @@ builder.Services.AddCors(options =>
     );
 });
 
-// Configuration JWT - Système d'authentification par tokens
-builder
-    .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"] ?? "")
-            ),
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = true,
-        };
-    });
 
 // Configuration Identity - Système de gestion des utilisateurs
 builder

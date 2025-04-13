@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HarmoniaBack.Migrations
 {
     /// <inheritdoc />
-    public partial class modifs : Migration
+    public partial class Modifs : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -6,7 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 // Contrôleur API pour gérer les progressions d'accords musicaux
+
 // Fournit des opérations CRUD via des endpoints REST[Route("api/progressions")]
+
+[Route("api/progressions")]
+[ApiController]
 public class ProgressionAccordsController : ControllerBase
 {
     private readonly HarmoniaContext _context;
