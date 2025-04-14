@@ -4,7 +4,7 @@ public class SuitesFavorites
     public string Id { get; set; } 
     public required string UserId { get; set; } 
     public ProgressionAccords? ProgressionAccords { get; set; }
-    public required string ProgressionAccordsId { get; set; } 
+    public required string ProgressionAccordsId { get; set; } // ID de la progression
 
     // Constructeur par défaut
     public SuitesFavorites()
