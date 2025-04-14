@@ -6,6 +6,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
@@ -21,14 +22,10 @@ builder.Services.AddCors(options =>
         "AllowAll",
         policy =>
         {
-            policy
-                .AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
+            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
         }
     );
 });
-
 
 // Configuration Identity - Système de gestion des utilisateurs
 builder
@@ -36,9 +33,14 @@ builder
     {
         options.User.RequireUniqueEmail = true;
         options.SignIn.RequireConfirmedEmail = false;
+        // Ajouter ici les options de mot de passe au lieu de les configurer séparément
+        options.Password.RequireDigit = false;
+        options.Password.RequiredLength = 4;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireLowercase = false;
     })
-    .AddEntityFrameworkStores<HarmoniaContext>()
-    .AddDefaultTokenProviders();
+    .AddEntityFrameworkStores<HarmoniaContext>();
 
 // Configuration réseau et services essentiels
 builder.WebHost.UseUrls("http://0.0.0.0:5007");
@@ -55,7 +57,7 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<HarmoniaContext>();
     context.Database.Migrate();
-    
+
     // Remplissage initial uniquement si la base est vide
     if (!context.Accords.Any())
     {

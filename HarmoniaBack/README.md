@@ -1,60 +1,105 @@
 # HarmoniaBack
 
-installer dotnet version 8.0 : 8.0.301 [C:\Program Files\dotnet\sdk]
-ASP dotnet core 8.0
+## Installation des prérequis
+
+### 1. Installation de .NET 8.0
+
+Téléchargez et installez le SDK .NET 8.0 depuis le site officiel de Microsoft :  
+👉 [https://dotnet.microsoft.com/download/dotnet/8.0](https://dotnet.microsoft.com/download/dotnet/8.0)  
+*Note : L'installation du SDK .NET 8.0 inclut ASP.NET Core 8.0*
+
+Vérifiez l'installation avec la commande :
+```bash
+dotnet --version
+```
+
+### 2. Installer les outils et packages nécessaires
+
+```bash
+# Installer Entity Framework CLI
 dotnet tool install --global dotnet-ef --version 9.0.4
-dotnet add package Microsoft.EntityFrameworkCore.Design 
-dotnet add package Microsoft.EntityFrameworkCore.Sqlite 
-dotnet ef database update
+
+# Ajouter les packages nécessaires
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+
+# Lancer le backend
 dotnet run
+```
 
-# HarmoniaBack - Backend de l'application Harmonia
+---
 
-## Prérequis
+## Installation et lancement du Backend
 
-Avant de commencer, assurez-vous que vous avez installé les outils suivants via le terminal :
+```bash
+# Clonez le repository backend
+git clone [https://github.com/Louanne56/HarmoniaBack.git]
+cd HarmoniaBack
+```
 
-1. **Installer le .NET SDK 8.0** :
-    ```bash
-    dotnet --version
-    # Si la version est inférieure à 8.0, installez-la avec la commande suivante :
-    # Suivez les instructions pour installer le SDK .NET 8.0 sur https://dotnet.microsoft.com/download/dotnet/8.0
-    ```
+Installez les packages Entity Framework nécessaires (si ce n'est pas déjà fait) :
+```bash
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+```
 
-2. **Installer dotnet-ef (outil Entity Framework)** :
-    ```bash
-    dotnet tool install --global dotnet-ef --version 9.0.4
-    ```
+Lancez le backend :
+```bash
+dotnet run
+```
 
-3. **Installer les packages nécessaires pour Entity Framework** :
-    ```bash
-    dotnet add package Microsoft.EntityFrameworkCore.Design
-    dotnet add package Microsoft.EntityFrameworkCore.Sqlite
-    ```
+Le serveur démarrera et initialisera automatiquement la base de données avec les données de départ *(seed data)*.
 
-4. **Vérifier que SQLite est installé** :
-    ```bash
-    sqlite3 --version
-    # Si SQLite n'est pas installé, suivez les instructions pour l'installer sur https://www.sqlite.org/download.html
-    ```
+---
 
-## Installation
+## Installation et lancement du Frontend
 
-1. **Cloner le repository** :
-    ```bash
-    git clone https://github.com/Louanne56/HarmoniaBack.git
-    cd harmonia-back
-    ```
+```bash
+# Clonez le repository frontend
+git clone [[URL-du-repo-frontend](https://github.com/Louanne56/HarmoniaFront.git)]
+cd HarmoniaFront
+```
 
-2. **Restaurer les dépendances** :
-    ```bash
-    dotnet restore
-    ```
-    ```
+Installez les dépendances :
+```bash
+npm install
+```
 
-3. **Démarrer l'application** :
-    ```bash
-    dotnet run
-    ```
+Lancez l'application :
+```bash
+npm start
+```
+## Visualisation de l'application
 
-    L'API sera accessible à l'adresse suivante : `http://localhost:5007`
+Une fois que l'application frontend est lancée (`npm start`), suivez ces étapes pour la visualiser en format mobile :
+
+1. Ouvrez les **outils de développement** de votre navigateur (généralement avec `F12` ou clic droit → *Inspecter*).
+2. Activez le **mode responsive/mobile** (icône représentant un smartphone/tablette en haut de l’inspecteur).
+3. Rechargez la page si nécessaire pour afficher correctement l'application dans ce format.
+
+### Connexion 
+
+Utilisez les identifiants suivants pour vous connecter :
+
+- **Pseudo** : `Louanne`  
+- **Mot de passe** : `MotDePasseLouanne`
+## Visualisation sur mobile avec Expo Go (Android / iOS)
+
+
+
+
+(optionnel) Si vous souhaitez tester l'application directement sur votre **smartphone**, vous pouvez utiliser **Expo Go** :
+
+### Étapes à suivre :
+
+1. Téléchargez **Expo Go** depuis le [Play Store (Android)](https://play.google.com/store/apps/details?id=host.exp.exponent) ou l'[App Store (iOS)](https://apps.apple.com/app/expo-go/id982107779).
+2. Assurez-vous que votre smartphone et votre ordinateur sont connectés au **même réseau Wi-Fi**.
+3. Dans le terminal de votre projet frontend, lancez Expo avec la commande :
+   ```bash
+   npm start
+   ```
+   Cela ouvrira une page dans votre navigateur avec un **QR code**.
+4. Scannez ce QR code avec l'application **Expo Go** depuis votre smartphone.
+5. L'application se chargera automatiquement sur votre appareil.
+
+> 💡 Si le QR code ne fonctionne pas ou si vous êtes en environnement restreint, vous pouvez aussi utiliser l'option "Tunnel" dans la page Expo pour une meilleure compatibilité.
